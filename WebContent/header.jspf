@@ -1,0 +1,64 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ page import="java.util.ArrayList"%>
+
+<script type="text/javascript" src="sendStatus.js"></script>
+
+<!-- Begin Header -->
+<header>
+	<div id="HeaderNav">
+		<h1>ChatApp</h1>
+		<nav>
+			<ul>
+				<li><a href="index.jsp">Home</a></li>
+				<li><a href="friends.jsp">Friends</a></li>
+				<li><a href="chat.jsp">Chat</a></li>
+				<li><a href="register.jsp">Register</a></li>
+				<li><a href="users.jsp">Users</a></li>
+			</ul>
+		</nav>
+	</div>
+	
+	
+	<% if (session.getAttribute("user")!=null) { %>
+	
+	<div id="StatusBlock">
+		<p>Status: <span id="status"><%=session.getAttribute("status")%></span></p>
+		<form id="statusForm">
+			<label for="selectStatus">Change: </label>
+			<select form="setStatusForm" name="selectStatus" id="selectStatus" onchange="sendStatus();">
+					<option value="online">Online</option>
+					<option value="offline">Offline</option>
+					<option value="away">Away</option>
+			</select> <br>
+			<label for="customStatus">Custom: </label> 
+			<input type="text" id="customStatus" name="customStatus" oninput="sendStatus();"/>
+		</form>
+	</div>
+	<% } %>
+
+</header>
+<!-- End Header -->
+
+<!-- Jquery solution to statusChange (accidently wrote this first, jquery is awesome
+<script>
+		// Attach a submit handler to the form
+		$( "#statusForm" ).submit(function( event ) {
+		 
+		  // Stop form from submitting normally
+		  event.preventDefault();
+		 
+		  // Put the inputs of form in array
+		  var postData = $("#statusForm > :input").serialize();
+		  console.log(postData);
+		 
+		  // Send the data using post
+		  var posting = $.post( "ChangeStatusServlet", postData );
+		 
+		  // Put the results in the status div
+		  posting.done(function( responseText ) {
+		    $("#status").text(responseText); 
+		  });
+		});
+	</script>
+ -->
